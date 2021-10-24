@@ -1,7 +1,7 @@
 """
 A simple pong game implemented using pygame.
 Player 1 uses the w and s keys to move their paddle up and down.
-Player 2 uses interacts via a socket connection to move their paddle up and down.
+Player 2 uses interacts with the up and down keys to move their paddle up and down.
 The ball bounces off the top and bottom of the screen and the paddles.
 If the ball hits the end of the screen, the other player gets a point.
 Paddle 1 is blue and paddle 2 is red.
@@ -473,45 +473,6 @@ class Pong:
         """
         pygame.quit()
         sys.exit()
-
-class Socket:
-    """
-    Socket class connects via webserver to control game logic
-    """
-    def __init__(self):
-        """
-        Initialises the socket.
-        """
-        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        """Connect the socket"""
-        self.s.connect(('localhost', 8888))
-
-    def get_events(self):
-        """
-        Get events from the socket.
-        """
-        while True:
-            data = self.s.recv(1024)
-            if not data:
-                break
-            if data == "w":
-                self.paddle1.move_up()
-            elif data == "s":
-                self.paddle1.move_down()
-            elif data == "up":
-                self.paddle2.move_up()
-            elif data == "down":
-                self.paddle2.move_down()
-            elif data == "space":
-                self.ball.reset()
-            elif data == "quit":
-                self.quit()
-
-    def quit(self):
-        """
-        Quit the socket.
-        """
-        self.s.close()
 
 
 
